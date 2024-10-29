@@ -32,6 +32,11 @@ public class AccountController {
         return accountService.create(account);
     }
 
+    @PostMapping(value = "/update", produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+    public Account update(@RequestBody Account account) {
+        return accountService.update(account);
+    }
+
     @DeleteMapping(value = "/delete/{id}", produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     public ResponseEntity<Account> delete(@PathVariable(value = "id") Long id) {
         accountService.delete(id);

@@ -1,7 +1,8 @@
-package com.kineipe.financemanager.service;
+package com.kineipe.financemanager.unittests.mockito.service;
 
 import com.kineipe.financemanager.domain.Account;
 import com.kineipe.financemanager.repository.AccountRepository;
+import com.kineipe.financemanager.service.AccountService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -14,7 +15,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.*;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)

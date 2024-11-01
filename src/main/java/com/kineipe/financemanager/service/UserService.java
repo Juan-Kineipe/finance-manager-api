@@ -1,0 +1,49 @@
+package com.kineipe.financemanager.service;
+
+import com.kineipe.financemanager.domain.User;
+import com.kineipe.financemanager.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.logging.Logger;
+
+@Service
+public class UserService {
+
+    @Autowired
+    UserRepository userRepository;
+
+    private Logger log = Logger.getLogger(UserService.class.getName());
+
+    public User findById(Long id) {
+        log.info("Finding user by id: " + id);
+        User user = userRepository.findById(id).orElseThrow();
+        log.info("Found user: " + user);
+        return user;
+    }
+
+    public List<User> findAll() {
+        log.info("Finding all users");
+        return userRepository.findAll();
+    }
+
+    public User create(User user) {
+        log.info("Creating user: " + user);
+        return userRepository.save(user);
+    }
+
+    public User update(User user) {
+        log.info("Updating user: " + user);
+        User entity = userRepository.findById(user.getId()).orElseThrow();
+        entity.setUsername(user.getUsername());
+        entity.setPassword(user.getPassword());
+        return userRepository.save(user);
+    }
+
+    public void delete(Long id) {
+        log.info("Deleting user by id: " + id);
+        User entity = userRepository.findById(id).orElseThrow();
+        userRepository.delete(entity);
+    }
+}

@@ -1,8 +1,8 @@
 package com.kineipe.financemanager.controller;
 
 
-import com.kineipe.financemanager.domain.Account;
-import com.kineipe.financemanager.service.AccountService;
+import com.kineipe.financemanager.domain.User;
+import com.kineipe.financemanager.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -11,35 +11,35 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/account")
-public class AccountController {
+@RequestMapping("/user")
+public class UserController {
 
     @Autowired
-    AccountService accountService;
+    UserService userService;
 
     @GetMapping(value = "/findById/{id}", produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
-    public Account findById(@PathVariable(value = "id") Long id) {
-        return accountService.findById(id);
+    public User findById(@PathVariable(value = "id") Long id) {
+        return userService.findById(id);
     }
 
     @GetMapping(value = "/findAll", produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
-    public List<Account> findAll() {
-        return accountService.findAll();
+    public List<User> findAll() {
+        return userService.findAll();
     }
 
     @PostMapping(value = "/create", produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
-    public Account create(@RequestBody Account account) {
-        return accountService.create(account);
+    public User create(@RequestBody User user) {
+        return userService.create(user);
     }
 
     @PostMapping(value = "/update", produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
-    public Account update(@RequestBody Account account) {
-        return accountService.update(account);
+    public User update(@RequestBody User user) {
+        return userService.update(user);
     }
 
     @DeleteMapping(value = "/delete/{id}", produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
-    public ResponseEntity<Account> delete(@PathVariable(value = "id") Long id) {
-        accountService.delete(id);
+    public ResponseEntity<User> delete(@PathVariable(value = "id") Long id) {
+        userService.delete(id);
         return ResponseEntity.noContent().build();
     }
 

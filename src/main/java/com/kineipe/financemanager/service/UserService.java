@@ -3,16 +3,23 @@ package com.kineipe.financemanager.service;
 import com.kineipe.financemanager.domain.User;
 import com.kineipe.financemanager.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.logging.Logger;
 
 @Service
-public class UserService {
+public class UserService implements UserDetailsService {
 
     @Autowired
     UserRepository userRepository;
+
+    public UserService(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
     private Logger log = Logger.getLogger(UserService.class.getName());
 
@@ -45,5 +52,16 @@ public class UserService {
         log.info("Deleting user by id: " + id);
         User entity = userRepository.findById(id).orElseThrow();
         userRepository.delete(entity);
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        log.info("Finding user by username " + username);
+        User user = userRepository.findByUsername(username);
+        if (user != null) {
+            return user;
+        } else {
+            throw new UsernameNotFoundException("Username" + username + "not found");
+        }
     }
 }

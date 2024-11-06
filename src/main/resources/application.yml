@@ -16,3 +16,9 @@ springdoc:
 
 cors:
   originPatterns: http://localhost:3000,http://localhost:8080
+
+security:
+  jwt:
+    token:
+      secret-key: ${SECRET_KEY}
+      expire-length: 3600000

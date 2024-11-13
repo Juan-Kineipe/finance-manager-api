@@ -66,7 +66,6 @@ public class SecurityConfig {
                                         "/api-docs/**"
                                 ).permitAll()
                                 .requestMatchers("/**").authenticated()
-                                .requestMatchers("/users").denyAll()
                 )
                 .cors(cors -> {})
                 .build();

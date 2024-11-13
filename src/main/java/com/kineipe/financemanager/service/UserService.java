@@ -45,7 +45,7 @@ public class UserService implements UserDetailsService {
         User entity = userRepository.findById(user.getId()).orElseThrow();
         entity.setUsername(user.getUsername());
         entity.setPassword(user.getPassword());
-        return userRepository.save(user);
+        return userRepository.save(entity);
     }
 
     public void delete(Long id) {

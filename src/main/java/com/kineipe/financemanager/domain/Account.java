@@ -26,7 +26,8 @@ public class Account {
 
     public Account() {}
 
-    public Account(User user, String name, AccountTypeEnum type, Double balance) {
+    public Account(Long id, User user, String name, AccountTypeEnum type, Double balance) {
+        this.id = id;
         this.user = user;
         this.name = name;
         this.type = type;

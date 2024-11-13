@@ -28,4 +28,6 @@ CREATE TABLE IF NOT EXISTS `user_permission` (
 ) ENGINE=InnoDB;
 
 create table accounts (id bigint not null auto_increment, balance decimal(38,2), name varchar(255), type enum ('CHECKING','CREDIT','SAVINGS'), user_id bigint not null, primary key (id)) engine=InnoDB;
-alter table accounts add constraint fk_accounts_user_id foreign key (user_id) references users (id)
+alter table accounts add constraint fk_accounts_user_id foreign key (user_id) references users (id);
+
+create table categories (id bigint not null auto_increment, name varchar(255), type enum ('EXPENSE','INCOME'), primary key (id)) engine=InnoDB

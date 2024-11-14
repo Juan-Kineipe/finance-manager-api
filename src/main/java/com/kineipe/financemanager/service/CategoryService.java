@@ -23,6 +23,13 @@ public class CategoryService {
 
     private Logger log = Logger.getLogger(CategoryService.class.getName());
 
+    public Category findById(Long id) {
+        log.info("Finding category by id: " + id);
+        Category category = categoryRepository.findById(id).orElseThrow();
+        log.info("Found category: " + category);
+        return category;
+    }
+
     public List<Category> findAll() {
         log.info("Finding all categories");
         return categoryRepository.findAll();

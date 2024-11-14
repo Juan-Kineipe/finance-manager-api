@@ -1,0 +1,47 @@
+package com.kineipe.financemanager.controller;
+
+
+import com.kineipe.financemanager.domain.Transaction;
+import com.kineipe.financemanager.domain.dto.TransactionRequestDTO;
+import com.kineipe.financemanager.service.TransactionService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/transaction")
+public class TransactionController {
+
+    @Autowired
+    TransactionService transactionService;
+
+    @GetMapping(value = "/{id}", produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+    public Transaction findById(@PathVariable(value = "id") Long id) {
+        return transactionService.findById(id);
+    }
+
+    @GetMapping(value = "/findAll", produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+    public List<Transaction> findAll() {
+        return transactionService.findAll();
+    }
+
+    @PostMapping(value = "/create", produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+    public Transaction create(@RequestBody TransactionRequestDTO transactionRequestDTO) {
+        return transactionService.create(transactionRequestDTO);
+    }
+
+    @PostMapping(value = "/update", produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+    public Transaction update(@RequestBody TransactionRequestDTO transactionRequestDTO) {
+        return transactionService.update(transactionRequestDTO);
+    }
+
+    @DeleteMapping(value = "/{id}", produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+    public ResponseEntity<Transaction> delete(@PathVariable(value = "id") Long id) {
+        transactionService.delete(id);
+        return ResponseEntity.noContent().build();
+    }
+
+}

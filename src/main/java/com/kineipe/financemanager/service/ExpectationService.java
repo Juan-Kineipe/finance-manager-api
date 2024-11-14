@@ -48,7 +48,6 @@ public class ExpectationService {
         Category category = categoryService.findById(expectationRequestDTO.getCategoryId());
         Expectation expectation = new Expectation();
         expectation.setAmount(expectationRequestDTO.getAmount());
-        expectation.setDate(expectationRequestDTO.getDate());
         expectation.setDescription(expectationRequestDTO.getDescription());
         expectation.setUser(user);
         expectation.setCategory(category);
@@ -61,7 +60,6 @@ public class ExpectationService {
         Category category = categoryService.findById(expectationRequestDTO.getCategoryId());
         Expectation expectation = expectationRepository.findById(expectationRequestDTO.getId()).orElseThrow();
         expectation.setAmount(expectationRequestDTO.getAmount());
-        expectation.setDate(expectationRequestDTO.getDate());
         expectation.setDescription(expectationRequestDTO.getDescription());
         expectation.setUser(user);
         expectation.setCategory(category);

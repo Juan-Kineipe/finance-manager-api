@@ -6,17 +6,15 @@ import java.time.LocalDateTime;
 public class ExpectationRequestDTO {
     private Long id;
     private Double amount;
-    private LocalDateTime date;
     private String description;
     private Long userId;
     private Long categoryId;
 
     public ExpectationRequestDTO() {}
 
-    public ExpectationRequestDTO(Long id, Double amount, LocalDateTime date, String description, Long userId, Long categoryId) {
+    public ExpectationRequestDTO(Long id, Double amount, String description, Long userId, Long categoryId) {
         this.id = id;
         this.amount = amount;
-        this.date = date;
         this.description = description;
         this.userId = userId;
         this.categoryId = categoryId;
@@ -36,14 +34,6 @@ public class ExpectationRequestDTO {
 
     public void setAmount(Double amount) {
         this.amount = amount;
-    }
-
-    public LocalDateTime getDate() {
-        return date;
-    }
-
-    public void setDate(LocalDateTime date) {
-        this.date = date;
     }
 
     public String getDescription() {

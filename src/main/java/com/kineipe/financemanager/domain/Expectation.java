@@ -25,19 +25,15 @@ public class Expectation {
     private Double amount;
 
     @Column
-    private LocalDateTime date;
-
-    @Column
     private String description;
 
     public Expectation() {}
 
-    public Expectation(Long id, User user, Category category, Double amount, LocalDateTime date, String description) {
+    public Expectation(Long id, User user, Category category, Double amount, String description) {
         this.id = id;
         this.user = user;
         this.category = category;
         this.amount = amount;
-        this.date = date;
         this.description = description;
     }
 
@@ -71,14 +67,6 @@ public class Expectation {
 
     public void setAmount(Double amount) {
         this.amount = amount;
-    }
-
-    public LocalDateTime getDate() {
-        return date;
-    }
-
-    public void setDate(LocalDateTime date) {
-        this.date = date;
     }
 
     public String getDescription() {

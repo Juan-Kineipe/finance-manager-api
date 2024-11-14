@@ -105,6 +105,8 @@ class TransactionServiceTest {
     @Test
     void testCreate() {
         when(userService.findById(1L)).thenReturn(user);
+        when(categoryService.findById(1L)).thenReturn(category);
+        when(accountService.findById(1L)).thenReturn(account);
         when(transactionRepository.save(any(Transaction.class))).thenReturn(transaction);
 
         Transaction result = transactionService.create(transactionRequestDTO);
@@ -114,6 +116,8 @@ class TransactionServiceTest {
         assertEquals(LocalDate.of(2024, Month.NOVEMBER, 14).atStartOfDay(), result.getDate());
         assertEquals("Testing transactions", result.getDescription());
         verify(userService, times(1)).findById(1L);
+        verify(categoryService, times(1)).findById(1L);
+        verify(accountService, times(1)).findById(1L);
         verify(transactionRepository, times(1)).save(any(Transaction.class));
     }
 

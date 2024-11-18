@@ -1,5 +1,6 @@
 package com.kineipe.financemanager.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.kineipe.financemanager.domain.enums.AccountTypeEnum;
 import jakarta.persistence.*;
 
@@ -12,6 +13,7 @@ public class Account {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;

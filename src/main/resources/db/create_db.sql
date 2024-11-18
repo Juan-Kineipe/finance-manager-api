@@ -1,3 +1,6 @@
+CREATE DATABASE finance_manager;
+USE finance_manager;
+
 CREATE TABLE IF NOT EXISTS `users` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `user_name` varchar(255) DEFAULT NULL,
@@ -27,7 +30,7 @@ CREATE TABLE IF NOT EXISTS `user_permission` (
   CONSTRAINT `fk_user_permission_permission` FOREIGN KEY (`id_permission`) REFERENCES `permission` (`id`)
 ) ENGINE=InnoDB;
 
-create table accounts (id bigint not null auto_increment, balance decimal(38,2), name varchar(255), type enum ('CHECKING','CREDIT','SAVINGS'), user_id bigint not null, primary key (id)) engine=InnoDB;
+create table accounts (id bigint not null auto_increment, balance float(53), name varchar(255), type enum ('CHECKING','CREDIT','SAVINGS'), user_id bigint not null, primary key (id)) engine=InnoDB;
 alter table accounts add constraint fk_accounts_user_id foreign key (user_id) references users (id);
 
 create table categories (id bigint not null auto_increment, name varchar(255), type enum ('EXPENSE','INCOME'), primary key (id)) engine=InnoDB;

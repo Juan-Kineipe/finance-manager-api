@@ -54,14 +54,13 @@ class ExpectationServiceTest {
 
     @BeforeEach
     void setUp() {
-        expectation = new Expectation(1L, user, category, 500.0, "Testing expectations");
+        expectation = new Expectation(1L, user, category, 500.0);
         user = new User(1L, "user", "password");
         category = new Category(1L, "Restaurants", CategoryTypeEnum.EXPENSE);
 
         expectationRequestDTO = new ExpectationRequestDTO();
         expectationRequestDTO.setId(1L);
         expectationRequestDTO.setAmount(500.0);
-        expectationRequestDTO.setDescription("Testing expectations");
         expectationRequestDTO.setUserId(1L);
         expectationRequestDTO.setCategoryId(1L);
     }
@@ -74,14 +73,13 @@ class ExpectationServiceTest {
 
         assertNotNull(result);
         assertEquals(500.0, result.getAmount());
-        assertEquals("Testing expectations", result.getDescription());
         verify(expectationRepository, times(1)).findById(1L);
     }
 
     @Test
     void testFindAll() {
         Category category2 = new Category(2L, "Bars", CategoryTypeEnum.EXPENSE);
-        Expectation expectation2 = new Expectation(2L, user, category2, 700.0, "Testing another expectation");
+        Expectation expectation2 = new Expectation(2L, user, category2, 700.0);
         List<Expectation> list = new ArrayList<>();
         list.add(expectation);
         list.add(expectation2);
@@ -105,7 +103,6 @@ class ExpectationServiceTest {
 
         assertNotNull(result);
         assertEquals(500.0, result.getAmount());
-        assertEquals("Testing expectations", result.getDescription());
         verify(userService, times(1)).findById(1L);
         verify(categoryService, times(1)).findById(1L);
         verify(expectationRepository, times(1)).save(any(Expectation.class));
@@ -120,7 +117,6 @@ class ExpectationServiceTest {
 
         assertNotNull(result);
         assertEquals(500.0, result.getAmount());
-        assertEquals("Testing expectations", result.getDescription());
         verify(expectationRepository, times(1)).findById(1L);
         verify(expectationRepository, times(1)).save(expectation);
     }

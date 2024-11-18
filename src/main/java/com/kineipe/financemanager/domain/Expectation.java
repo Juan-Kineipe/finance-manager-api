@@ -1,5 +1,6 @@
 package com.kineipe.financemanager.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
@@ -13,6 +14,7 @@ public class Expectation {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
@@ -24,17 +26,13 @@ public class Expectation {
     @Column
     private Double amount;
 
-    @Column
-    private String description;
-
     public Expectation() {}
 
-    public Expectation(Long id, User user, Category category, Double amount, String description) {
+    public Expectation(Long id, User user, Category category, Double amount) {
         this.id = id;
         this.user = user;
         this.category = category;
         this.amount = amount;
-        this.description = description;
     }
 
     public Long getId() {
@@ -67,13 +65,5 @@ public class Expectation {
 
     public void setAmount(Double amount) {
         this.amount = amount;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
     }
 }

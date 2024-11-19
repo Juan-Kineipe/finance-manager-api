@@ -7,9 +7,10 @@ import com.kineipe.financemanager.domain.User;
 import com.kineipe.financemanager.domain.dto.TransactionRequestDTO;
 import com.kineipe.financemanager.repository.TransactionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.logging.Logger;
 
 @Service
@@ -40,9 +41,9 @@ public class TransactionService {
         return transaction;
     }
 
-    public List<Transaction> findAll() {
+    public Page<Transaction> findAll(Pageable pageable) {
         log.info("Finding all transactions");
-        return transactionRepository.findAll();
+        return transactionRepository.findAll(pageable);
     }
 
     public Transaction create(TransactionRequestDTO transactionRequestDTO) {

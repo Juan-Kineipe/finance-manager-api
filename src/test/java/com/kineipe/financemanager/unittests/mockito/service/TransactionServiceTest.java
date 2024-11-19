@@ -19,9 +19,12 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.Month;
 import java.util.ArrayList;
 import java.util.List;
@@ -93,13 +96,17 @@ class TransactionServiceTest {
         list.add(transaction);
         list.add(transaction2);
 
-        when(transactionRepository.findAll()).thenReturn(list);
+        Page<Transaction> page = new PageImpl<>(list);
 
-        List<Transaction> result = transactionService.findAll();
+        when(transactionRepository.findAll(any(Pageable.class))).thenReturn(page);
+
+        Pageable pageable = PageRequest.of(0, 10);
+
+        Page<Transaction> result = transactionService.findAll(pageable);
 
         assertNotNull(result);
-        assertEquals(2, result.size());
-        verify(transactionRepository, times(1)).findAll();
+        assertEquals(2, result.getContent().size());
+        verify(transactionRepository, times(1)).findAll(any(Pageable.class));
     }
 
     @Test

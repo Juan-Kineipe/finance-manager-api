@@ -27,11 +27,6 @@ public class UserController {
         return userService.findAll();
     }
 
-    @PostMapping(value = "/create", produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
-    public User create(@RequestBody User user) {
-        return userService.create(user);
-    }
-
     @PostMapping(value = "/update", produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     public User update(@RequestBody User user) {
         return userService.update(user);

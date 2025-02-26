@@ -35,11 +35,6 @@ public class UserService implements UserDetailsService {
         return userRepository.findAll();
     }
 
-    public User create(User user) {
-        log.info("Creating user: " + user);
-        return userRepository.save(user);
-    }
-
     public User update(User user) {
         log.info("Updating user: " + user);
         User entity = userRepository.findById(user.getId()).orElseThrow();
@@ -59,8 +54,10 @@ public class UserService implements UserDetailsService {
         log.info("Finding user by username " + username);
         User user = userRepository.findByUsername(username);
         if (user != null) {
+            log.info("Found user by username " + user);
             return user;
         } else {
+            log.info("Username not found " + username);
             throw new UsernameNotFoundException("Username" + username + "not found");
         }
     }

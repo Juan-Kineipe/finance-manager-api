@@ -1,7 +1,7 @@
 package com.kineipe.financemanager.integrationtests.controller;
 
 import com.kineipe.financemanager.config.TestConfig;
-import com.kineipe.financemanager.domain.dto.AccountCredentials;
+import com.kineipe.financemanager.domain.dto.LoginRequestDTO;
 import com.kineipe.financemanager.domain.dto.Token;
 import com.kineipe.financemanager.integrationtests.testcontainers.AbstractIntegrationTest;
 import org.junit.jupiter.api.MethodOrderer;
@@ -9,7 +9,6 @@ import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.jdbc.Sql;
 import org.testcontainers.shaded.com.fasterxml.jackson.core.JsonProcessingException;
 import org.testcontainers.shaded.com.fasterxml.jackson.databind.JsonMappingException;
@@ -29,8 +28,8 @@ public class AuthControllerTest extends AbstractIntegrationTest {
     @Order(1)
     public void testSignin() throws JsonMappingException, JsonProcessingException {
 
-        AccountCredentials user =
-                new AccountCredentials("admin", "123");
+        LoginRequestDTO user =
+                new LoginRequestDTO("admin", "123");
 
         token = given()
                 .basePath("/auth/signin")

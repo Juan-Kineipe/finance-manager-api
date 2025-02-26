@@ -1,10 +1,17 @@
 package com.kineipe.financemanager.controller;
 
-import com.kineipe.financemanager.domain.dto.AccountCredentials;
-import com.kineipe.financemanager.service.AuthService;
+import com.kineipe.financemanager.domain.User;
+import com.kineipe.financemanager.domain.dto.LoginRequestDTO;
+import com.kineipe.financemanager.domain.dto.LoginResponseDTO;
+import com.kineipe.financemanager.domain.dto.RegisterDTO;
+import com.kineipe.financemanager.repository.UserRepository;
+import com.kineipe.financemanager.security.TokenService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -12,30 +19,34 @@ import org.springframework.web.bind.annotation.*;
 public class AuthController {
 
     @Autowired
-    AuthService authService;
+    TokenService tokenService;
+
+    @Autowired
+    AuthenticationManager authenticationManager;
+
+    @Autowired
+    UserRepository userRepository;
 
     @PostMapping(value = "/signin")
-    public ResponseEntity signin(@RequestBody AccountCredentials credentials) {
-        if (checkParams(credentials))
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Invalid client request!");
-        var token = authService.signin(credentials);
-        if (token == null)
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Invalid client request!");
-        return token;
+    public ResponseEntity signin(@RequestBody @Valid LoginRequestDTO loginRequestDTO) {
+        var usernamePassowrd = new UsernamePasswordAuthenticationToken(loginRequestDTO.username(), loginRequestDTO.password());
+        var auth = this.authenticationManager.authenticate(usernamePassowrd);
+
+        var token = tokenService.generateToken((User) auth.getPrincipal());
+
+        return ResponseEntity.ok(new LoginResponseDTO(token));
     }
 
-    @PutMapping(value = "/refresh/{username}")
-    public ResponseEntity refreshToken(@PathVariable("username") String username, @RequestHeader("Authorization") String refreshToken) {
-        if (refreshToken == null || refreshToken.isBlank() || username == null || username.isBlank())
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Invalid client request!");
-        var token = authService.refreshToken(username, refreshToken);
-        if (token == null)
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Invalid client request!");
-        return token;
-    }
+    @PostMapping(value = "/register")
+    public ResponseEntity register(@RequestBody @Valid RegisterDTO registerDTO) {
+        if (this.userRepository.findByUsername(registerDTO.username()) != null) return ResponseEntity.badRequest().build();
 
-    private boolean checkParams(AccountCredentials credentials) {
-        return credentials == null || credentials.getUsername() == null || credentials.getUsername().isBlank() || credentials.getPassword() == null || credentials.getPassword().isBlank();
+        String encryptedPassword = new BCryptPasswordEncoder().encode(registerDTO.password());
+        User user = new User(registerDTO.username(), registerDTO.firstName(), registerDTO.lastName(), encryptedPassword, registerDTO.permissions());
+
+        this.userRepository.save(user);
+
+        return ResponseEntity.ok().build();
     }
 
 }

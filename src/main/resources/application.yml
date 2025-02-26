@@ -20,5 +20,4 @@ cors:
 security:
   jwt:
     token:
-      secret-key: ${SECRET_KEY}
-      expire-length: 3600000
+      secret-key: ksdfgh346aksjfd57odsgfj012gmbs89

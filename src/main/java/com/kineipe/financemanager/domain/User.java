@@ -28,13 +28,13 @@ public class User implements UserDetails {
     @Column
     private String password;
     @Column(name="account_non_expired")
-    private Boolean accountNonExpired;
+    private Boolean accountNonExpired = true;
     @Column(name="account_non_locked")
-    private Boolean accountNonLocked;
+    private Boolean accountNonLocked = true;
     @Column(name="credentials_non_expired")
-    private Boolean credentialsNonExpired;
+    private Boolean credentialsNonExpired = true;
     @Column
-    private Boolean enabled;
+    private Boolean enabled = true;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name="user_permission", joinColumns = {@JoinColumn (name="id_user")}, inverseJoinColumns = {@JoinColumn (name="id_permission")})
@@ -48,12 +48,12 @@ public class User implements UserDetails {
         this.password = password;
     }
 
-    public List<String> getRoles() {
-        List<String> roles = new ArrayList<>();
-        for (Permission permission : permissions) {
-            roles.add(permission.getDescription());
-        }
-        return roles;
+    public User(String username, String firstName, String lastName, String password, List<Permission> permissions) {
+        this.username = username;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.password = password;
+        this.permissions = permissions;
     }
 
     @JsonIgnore

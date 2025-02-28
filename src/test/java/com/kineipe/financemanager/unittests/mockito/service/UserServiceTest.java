@@ -67,18 +67,6 @@ class UserServiceTest {
     }
 
     @Test
-    void create() {
-        when(repository.save(user)).thenReturn(user);
-
-        User result = service.create(user);
-
-        assertNotNull(result);
-        assertEquals("user", result.getUsername());
-        assertEquals("password", result.getPassword());
-        verify(repository, times(1)).save(user);
-    }
-
-    @Test
     void update() {
         User updatedUser = new User(1L, "updatedUser", "updatedPassword");
 

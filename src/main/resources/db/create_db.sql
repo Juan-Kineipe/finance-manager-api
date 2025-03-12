@@ -61,11 +61,13 @@ CREATE TABLE IF NOT EXISTS transactions (
     amount FLOAT(53),
     date DATETIME(6),
     description VARCHAR(255),
-    account_id BIGINT NOT NULL,
+    account_id BIGINT NULL,
+    credit_card_id BIGINT NULL,
     category_id BIGINT NOT NULL,
     user_id BIGINT NOT NULL,
     PRIMARY KEY (id),
     CONSTRAINT fk_transactions_account_id FOREIGN KEY (account_id) REFERENCES accounts (id),
+    CONSTRAINT fk_transactions_credit_card_id FOREIGN KEY (credit_card_id) REFERENCES credit_cards (id),
     CONSTRAINT fk_transactions_category_id FOREIGN KEY (category_id) REFERENCES categories (id),
     CONSTRAINT fk_transactions_user_id FOREIGN KEY (user_id) REFERENCES users (id)
 ) ENGINE=InnoDB;

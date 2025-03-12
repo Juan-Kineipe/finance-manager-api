@@ -22,9 +22,10 @@ INSERT INTO categories (name, type) VALUES ('Bonus', 'INCOME');
 INSERT INTO categories (name, type) VALUES ('Savings', 'INCOME');
 INSERT INTO categories (name, type) VALUES ('Others', 'INCOME');
 
-INSERT INTO accounts (name, type, balance, user_id) VALUES ('Checking', 'CHECKING', 61750.7, 1);
-INSERT INTO accounts (name, type, balance, user_id) VALUES ('Credit', 'CREDIT', 91133.0, 1);
-INSERT INTO accounts (name, type, balance, user_id) VALUES ('Savings', 'SAVINGS', 40619.8, 1);
+INSERT INTO accounts (name, type, balance, user_id) VALUES ('Checking', 'CHECKING', 6750.7, 1);
+INSERT INTO accounts (name, type, balance, user_id) VALUES ('Savings', 'SAVINGS', 4619.8, 1);
+
+INSERT INTO credit_cards (name, credit_limit, user_id) VALUES ('Credit', 1133.0, 1);
 
 INSERT INTO transactions (amount, date, description, user_id, category_id, account_id) VALUES (1200.0, '2024-11-01T09:00:00', 'Monthly Rent', 1, 1, 2);
 INSERT INTO transactions (amount, date, description, user_id, category_id, account_id) VALUES (80.0, '2024-11-02T10:30:00', 'Electricity Bill', 1, 1, 1);

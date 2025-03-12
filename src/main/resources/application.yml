@@ -18,7 +18,7 @@ springdoc:
     path: /api-docs
 
 cors:
-  originPatterns: http://localhost:3000,http://localhost:8080
+  originPatterns: http://localhost:4200,http://localhost:8080
 
 security:
   jwt:

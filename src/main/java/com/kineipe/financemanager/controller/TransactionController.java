@@ -2,6 +2,7 @@ package com.kineipe.financemanager.controller;
 
 
 import com.kineipe.financemanager.domain.Transaction;
+import com.kineipe.financemanager.domain.User;
 import com.kineipe.financemanager.domain.dto.TransactionRequestDTO;
 import com.kineipe.financemanager.service.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -29,15 +31,18 @@ public class TransactionController {
 
     @GetMapping(value = "/findAll", produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     public ResponseEntity<Page<Transaction>> findAll(
+            Authentication authentication,
             @RequestParam(value = "page", defaultValue = "0") Integer page,
             @RequestParam(value = "size", defaultValue = "50") Integer size,
             @RequestParam(value = "direction", defaultValue = "asc") String direction
     ) {
 
+        User user = (User) authentication.getPrincipal();
+
         Sort.Direction sortDirection = "desc".equalsIgnoreCase(direction) ? Sort.Direction.DESC : Sort.Direction.ASC;
 
         Pageable pageable = PageRequest.of(page, size, Sort.by(sortDirection, "date"));
-        return ResponseEntity.ok(transactionService.findAll(pageable));
+        return ResponseEntity.ok(transactionService.findAllByUser(user, pageable));
     }
 
     @PostMapping(value = "/create", produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})

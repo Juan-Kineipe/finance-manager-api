@@ -32,9 +32,8 @@ public class AccountService {
         return account;
     }
 
-    public List<Account> findAll() {
-        log.info("Finding all accounts");
-        return accountRepository.findAll();
+    public List<Account> findAllByUser(User user) {
+        return accountRepository.findByUser(user);
     }
 
     public Account create(AccountRequestDTO accountRequestDTO) {

@@ -41,9 +41,9 @@ public class TransactionService {
         return transaction;
     }
 
-    public Page<Transaction> findAll(Pageable pageable) {
+    public Page<Transaction> findAllByUser(User user, Pageable pageable) {
         log.info("Finding all transactions");
-        return transactionRepository.findAll(pageable);
+        return transactionRepository.findByUser(user, pageable);
     }
 
     public Transaction create(TransactionRequestDTO transactionRequestDTO) {

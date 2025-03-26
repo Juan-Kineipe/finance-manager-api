@@ -37,9 +37,9 @@ public class ExpectationService {
         return expectation;
     }
 
-    public List<Expectation> findAll() {
+    public List<Expectation> findAllByUser(User user) {
         log.info("Finding all expectations");
-        return expectationRepository.findAll();
+        return expectationRepository.findAllByUser(user);
     }
 
     public Expectation create(ExpectationRequestDTO expectationRequestDTO) {

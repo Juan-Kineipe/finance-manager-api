@@ -4,6 +4,7 @@ import com.kineipe.financemanager.domain.User;
 import com.kineipe.financemanager.domain.dto.LoginRequestDTO;
 import com.kineipe.financemanager.domain.dto.LoginResponseDTO;
 import com.kineipe.financemanager.domain.dto.RegisterDTO;
+import com.kineipe.financemanager.domain.dto.UserDTO;
 import com.kineipe.financemanager.repository.UserRepository;
 import com.kineipe.financemanager.security.TokenService;
 import jakarta.validation.Valid;
@@ -33,8 +34,15 @@ public class AuthController {
         var auth = this.authenticationManager.authenticate(usernamePassowrd);
 
         var token = tokenService.generateToken((User) auth.getPrincipal());
+        var user = (User) auth.getPrincipal();
 
-        return ResponseEntity.ok(new LoginResponseDTO(token));
+        var userDTO = new UserDTO(
+                user.getId(),
+                user.getUsername(),
+                user.getPermissions()
+        );
+
+        return ResponseEntity.ok(new LoginResponseDTO(token, userDTO));
     }
 
     @PostMapping(value = "/register")

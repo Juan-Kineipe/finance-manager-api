@@ -77,20 +77,20 @@ class ExpectationServiceTest {
     }
 
     @Test
-    void testFindAll() {
+    void testFindAllByUser() {
         Category category2 = new Category(2L, "Bars", CategoryTypeEnum.EXPENSE);
         Expectation expectation2 = new Expectation(2L, user, category2, 700.0);
         List<Expectation> list = new ArrayList<>();
         list.add(expectation);
         list.add(expectation2);
 
-        when(expectationRepository.findAll()).thenReturn(list);
+        when(expectationRepository.findAllByUser(user)).thenReturn(list);
 
-        List<Expectation> result = expectationService.findAll();
+        List<Expectation> result = expectationService.findAllByUser(user);
 
         assertNotNull(result);
         assertEquals(2, result.size());
-        verify(expectationRepository, times(1)).findAll();
+        verify(expectationRepository, times(1)).findAllByUser(user);
     }
 
     @Test

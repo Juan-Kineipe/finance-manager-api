@@ -90,7 +90,7 @@ class TransactionServiceTest {
     }
 
     @Test
-    void testFindAll() {
+    void testFindAllByUser() {
         Transaction transaction2 = new Transaction(2L, user, category, account, 60.0, LocalDate.of(2024, Month.NOVEMBER, 11).atStartOfDay(), "Testing another transaction");
         List<Transaction> list = new ArrayList<>();
         list.add(transaction);
@@ -98,15 +98,15 @@ class TransactionServiceTest {
 
         Page<Transaction> page = new PageImpl<>(list);
 
-        when(transactionRepository.findAll(any(Pageable.class))).thenReturn(page);
+        when(transactionRepository.findByUser(eq(user), any(Pageable.class))).thenReturn(page);
 
         Pageable pageable = PageRequest.of(0, 10);
 
-        Page<Transaction> result = transactionService.findAll(pageable);
+        Page<Transaction> result = transactionService.findAllByUser(user, pageable);
 
         assertNotNull(result);
         assertEquals(2, result.getContent().size());
-        verify(transactionRepository, times(1)).findAll(any(Pageable.class));
+        verify(transactionRepository, times(1)).findByUser(eq(user), any(Pageable.class));
     }
 
     @Test

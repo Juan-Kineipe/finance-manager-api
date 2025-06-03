@@ -65,19 +65,19 @@ class AccountServiceTest {
     }
 
     @Test
-    void testFindAll() {
+    void testFindAllByUser() {
         Account account2 = new Account(2L, user, "Checking Account", AccountTypeEnum.CHECKING, 2000.0);
         List<Account> list = new ArrayList<>();
         list.add(account);
         list.add(account2);
 
-        when(accountRepository.findAll()).thenReturn(list);
+        when(accountRepository.findByUser(user)).thenReturn(list);
 
-        List<Account> result = accountService.findAll();
+        List<Account> result = accountService.findAllByUser(user);
 
         assertNotNull(result);
         assertEquals(2, result.size());
-        verify(accountRepository, times(1)).findAll();
+        verify(accountRepository, times(1)).findByUser(user);
     }
 
     @Test

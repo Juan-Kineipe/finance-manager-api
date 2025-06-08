@@ -14,9 +14,6 @@ public class CategoryService {
     @Autowired
     CategoryRepository categoryRepository;
 
-    @Autowired
-    UserService userService;
-
     public CategoryService(CategoryRepository categoryRepository) {
         this.categoryRepository = categoryRepository;
     }

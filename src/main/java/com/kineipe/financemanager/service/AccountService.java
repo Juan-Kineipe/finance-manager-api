@@ -1,7 +1,6 @@
 package com.kineipe.financemanager.service;
 
 import com.kineipe.financemanager.domain.Account;
-import com.kineipe.financemanager.domain.User;
 import com.kineipe.financemanager.domain.dto.AccountRequestDTO;
 import com.kineipe.financemanager.repository.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,9 +15,6 @@ public class AccountService {
     @Autowired
     AccountRepository accountRepository;
 
-    @Autowired
-    UserService userService;
-
     public AccountService(AccountRepository accountRepository) {
         this.accountRepository = accountRepository;
     }
@@ -32,18 +28,17 @@ public class AccountService {
         return account;
     }
 
-    public List<Account> findAllByUser(User user) {
-        return accountRepository.findByUser(user);
+    public List<Account> findAllByUserId(Long userId) {
+        return accountRepository.findByUserId(userId);
     }
 
     public Account create(AccountRequestDTO accountRequestDTO) {
         log.info("Creating account: " + accountRequestDTO);
-        User user = userService.findById(accountRequestDTO.getUserId());
         Account account = new Account();
         account.setName(accountRequestDTO.getName());
         account.setType(accountRequestDTO.getType());
         account.setBalance(accountRequestDTO.getBalance());
-        account.setUser(user);
+        account.setUserId(accountRequestDTO.getUserId());
         return accountRepository.save(account);
     }
 

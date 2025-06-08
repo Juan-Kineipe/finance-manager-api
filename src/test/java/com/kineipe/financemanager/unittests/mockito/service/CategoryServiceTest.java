@@ -1,8 +1,6 @@
 package com.kineipe.financemanager.unittests.mockito.service;
 
-import com.kineipe.financemanager.domain.Account;
 import com.kineipe.financemanager.domain.Category;
-import com.kineipe.financemanager.domain.User;
 import com.kineipe.financemanager.domain.enums.CategoryTypeEnum;
 import com.kineipe.financemanager.repository.CategoryRepository;
 import com.kineipe.financemanager.service.CategoryService;

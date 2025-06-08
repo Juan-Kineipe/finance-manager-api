@@ -13,10 +13,8 @@ public class Account {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @JsonIgnore
-    @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
+    @Column(name = "user_id", nullable = false)
+    private Long userId;
 
     @Column
     private String name;
@@ -28,9 +26,9 @@ public class Account {
 
     public Account() {}
 
-    public Account(Long id, User user, String name, AccountTypeEnum type, Double balance) {
+    public Account(Long id, Long userId, String name, AccountTypeEnum type, Double balance) {
         this.id = id;
-        this.user = user;
+        this.userId = userId;
         this.name = name;
         this.type = type;
         this.balance = balance;
@@ -44,12 +42,12 @@ public class Account {
         this.id = id;
     }
 
-    public User getUser() {
-        return user;
+    public Long getUserId() {
+        return userId;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     public String getName() {

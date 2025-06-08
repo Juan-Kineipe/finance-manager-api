@@ -14,10 +14,8 @@ public class Expectation {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @JsonIgnore
-    @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
+    @Column(name = "user_id", nullable = false)
+    private Long userId;
 
     @ManyToOne
     @JoinColumn(name = "category_id", nullable = false)
@@ -28,9 +26,9 @@ public class Expectation {
 
     public Expectation() {}
 
-    public Expectation(Long id, User user, Category category, Double amount) {
+    public Expectation(Long id, Long userId, Category category, Double amount) {
         this.id = id;
-        this.user = user;
+        this.userId = userId;
         this.category = category;
         this.amount = amount;
     }
@@ -43,12 +41,12 @@ public class Expectation {
         this.id = id;
     }
 
-    public User getUser() {
-        return user;
+    public Long getUserId() {
+        return userId;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     public Category getCategory() {

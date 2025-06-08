@@ -2,14 +2,12 @@ package com.kineipe.financemanager.unittests.mockito.service;
 
 import com.kineipe.financemanager.domain.Category;
 import com.kineipe.financemanager.domain.Expectation;
-import com.kineipe.financemanager.domain.User;
 import com.kineipe.financemanager.domain.dto.ExpectationRequestDTO;
 import com.kineipe.financemanager.domain.enums.CategoryTypeEnum;
 import com.kineipe.financemanager.repository.ExpectationRepository;
 import com.kineipe.financemanager.service.AccountService;
 import com.kineipe.financemanager.service.CategoryService;
 import com.kineipe.financemanager.service.ExpectationService;
-import com.kineipe.financemanager.service.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -18,8 +16,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.time.LocalDate;
-import java.time.Month;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;

@@ -3,7 +3,6 @@ package com.kineipe.financemanager.service;
 import com.kineipe.financemanager.domain.Account;
 import com.kineipe.financemanager.domain.Category;
 import com.kineipe.financemanager.domain.Transaction;
-import com.kineipe.financemanager.domain.User;
 import com.kineipe.financemanager.domain.dto.TransactionRequestDTO;
 import com.kineipe.financemanager.repository.TransactionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,9 +17,6 @@ public class TransactionService {
 
     @Autowired
     TransactionRepository transactionRepository;
-
-    @Autowired
-    UserService userService;
 
     @Autowired
     CategoryService categoryService;
@@ -41,21 +37,20 @@ public class TransactionService {
         return transaction;
     }
 
-    public Page<Transaction> findAllByUser(User user, Pageable pageable) {
+    public Page<Transaction> findAllByUserId(Long userId, Pageable pageable) {
         log.info("Finding all transactions");
-        return transactionRepository.findByUser(user, pageable);
+        return transactionRepository.findByUserId(userId, pageable);
     }
 
     public Transaction create(TransactionRequestDTO transactionRequestDTO) {
         log.info("Creating transaction: " + transactionRequestDTO);
-        User user = userService.findById(transactionRequestDTO.getUserId());
         Category category = categoryService.findById(transactionRequestDTO.getCategoryId());
         Account account = accountService.findById(transactionRequestDTO.getAccountId());
         Transaction transaction = new Transaction();
         transaction.setAmount(transactionRequestDTO.getAmount());
         transaction.setDate(transactionRequestDTO.getDate());
         transaction.setDescription(transactionRequestDTO.getDescription());
-        transaction.setUser(user);
+        transaction.setUserId(transactionRequestDTO.getUserId());
         transaction.setCategory(category);
         transaction.setAccount(account);
         return transactionRepository.save(transaction);
@@ -63,14 +58,13 @@ public class TransactionService {
 
     public Transaction update(TransactionRequestDTO transactionRequestDTO) {
         log.info("Updating transaction: " + transactionRequestDTO);
-        User user = userService.findById(transactionRequestDTO.getUserId());
         Category category = categoryService.findById(transactionRequestDTO.getCategoryId());
         Account account = accountService.findById(transactionRequestDTO.getAccountId());
         Transaction transaction = transactionRepository.findById(transactionRequestDTO.getId()).orElseThrow();
         transaction.setAmount(transactionRequestDTO.getAmount());
         transaction.setDate(transactionRequestDTO.getDate());
         transaction.setDescription(transactionRequestDTO.getDescription());
-        transaction.setUser(user);
+        transaction.setUserId(transactionRequestDTO.getUserId());
         transaction.setCategory(category);
         transaction.setAccount(account);
         return transactionRepository.save(transaction);

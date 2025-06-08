@@ -2,7 +2,6 @@ package com.kineipe.financemanager.controller;
 
 
 import com.kineipe.financemanager.domain.Expectation;
-import com.kineipe.financemanager.domain.User;
 import com.kineipe.financemanager.domain.dto.ExpectationRequestDTO;
 import com.kineipe.financemanager.service.ExpectationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,8 +26,8 @@ public class ExpectationController {
 
     @GetMapping(value = "/findAll", produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     public List<Expectation> findAll(Authentication authentication) {
-        User user = (User) authentication.getPrincipal();
-        return expectationService.findAllByUser(user);
+        Long userId = (Long) authentication.getPrincipal();
+        return expectationService.findAllByUserId(userId);
     }
 
     @PostMapping(value = "/create", produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})

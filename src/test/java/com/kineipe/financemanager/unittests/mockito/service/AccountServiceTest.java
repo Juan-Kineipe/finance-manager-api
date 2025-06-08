@@ -1,12 +1,10 @@
 package com.kineipe.financemanager.unittests.mockito.service;
 
 import com.kineipe.financemanager.domain.Account;
-import com.kineipe.financemanager.domain.User;
 import com.kineipe.financemanager.domain.dto.AccountRequestDTO;
 import com.kineipe.financemanager.domain.enums.AccountTypeEnum;
 import com.kineipe.financemanager.repository.AccountRepository;
 import com.kineipe.financemanager.service.AccountService;
-import com.kineipe.financemanager.service.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;

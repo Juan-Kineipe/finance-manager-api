@@ -2,7 +2,6 @@ package com.kineipe.financemanager.controller;
 
 
 import com.kineipe.financemanager.domain.Transaction;
-import com.kineipe.financemanager.domain.User;
 import com.kineipe.financemanager.domain.dto.TransactionRequestDTO;
 import com.kineipe.financemanager.service.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,8 +13,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/transaction")
@@ -37,12 +34,11 @@ public class TransactionController {
             @RequestParam(value = "direction", defaultValue = "asc") String direction
     ) {
 
-        User user = (User) authentication.getPrincipal();
-
+        Long userId = (Long) authentication.getPrincipal();
         Sort.Direction sortDirection = "desc".equalsIgnoreCase(direction) ? Sort.Direction.DESC : Sort.Direction.ASC;
 
         Pageable pageable = PageRequest.of(page, size, Sort.by(sortDirection, "date"));
-        return ResponseEntity.ok(transactionService.findAllByUser(user, pageable));
+        return ResponseEntity.ok(transactionService.findAllByUserId(userId, pageable));
     }
 
     @PostMapping(value = "/create", produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})

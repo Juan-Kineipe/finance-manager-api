@@ -2,7 +2,6 @@ package com.kineipe.financemanager.controller;
 
 
 import com.kineipe.financemanager.domain.Account;
-import com.kineipe.financemanager.domain.User;
 import com.kineipe.financemanager.domain.dto.AccountRequestDTO;
 import com.kineipe.financemanager.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,8 +26,8 @@ public class AccountController {
 
     @GetMapping(value = "/findAll", produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     public List<Account> findAll(Authentication authentication) {
-        User user = (User) authentication.getPrincipal();
-        return accountService.findAllByUser(user);
+        Long userId = (Long) authentication.getPrincipal();
+        return accountService.findAllByUserId(userId);
     }
 
     @PostMapping(value = "/create", produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})

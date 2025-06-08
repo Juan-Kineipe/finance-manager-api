@@ -2,50 +2,37 @@ package com.kineipe.financemanager.security;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
-import com.auth0.jwt.exceptions.JWTCreationException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
-import com.kineipe.financemanager.domain.User;
+import com.auth0.jwt.interfaces.DecodedJWT;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
+import java.util.List;
+
 
 @Service
 public class TokenService {
 
     @Value("${security.jwt.token.secret-key:secret}")
-    private String secret = "my-secret";
+    private String secret;
 
-    public String generateToken(User user) {
-        try {
-            Algorithm algorithm = Algorithm.HMAC256(secret);
-            String token = JWT.create()
-                    .withIssuer("auth-api")
-                    .withSubject(user.getUsername())
-                    .withExpiresAt(this.genExpirationDate())
-                    .sign(algorithm);
-            return token;
-        } catch (JWTCreationException exception) {
-            throw new RuntimeException("Error while generating token", exception);
-        }
-    }
-
-    public String validateToken(String token) {
+    public DecodedJWT getDecodedJWT(String token) {
         try {
             Algorithm algorithm = Algorithm.HMAC256(secret);
             return JWT.require(algorithm)
-                    .withIssuer("auth-api")
+                    .withIssuer("finance-manager")
                     .build()
-                    .verify(token)
-                    .getSubject();
+                    .verify(token);
         } catch (JWTVerificationException exception) {
-            return "";
+            throw new RuntimeException("Invalid or expired token", exception);
         }
     }
 
-    private Instant genExpirationDate() {
-        return LocalDateTime.now().plusHours(2).toInstant(ZoneOffset.of("-03:00"));
+    public Long extractUserId(String token) {
+        return getDecodedJWT(token).getClaim("userId").asLong();
+    }
+
+    public List<String> extractRoles(String token) {
+        return getDecodedJWT(token).getClaim("roles").asList(String.class);
     }
 }

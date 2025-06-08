@@ -2,7 +2,6 @@ package com.kineipe.financemanager.service;
 
 import com.kineipe.financemanager.domain.Category;
 import com.kineipe.financemanager.domain.Expectation;
-import com.kineipe.financemanager.domain.User;
 import com.kineipe.financemanager.domain.dto.ExpectationRequestDTO;
 import com.kineipe.financemanager.repository.ExpectationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,9 +15,6 @@ public class ExpectationService {
 
     @Autowired
     ExpectationRepository expectationRepository;
-
-    @Autowired
-    UserService userService;
 
     @Autowired
     CategoryService categoryService;
@@ -37,29 +33,27 @@ public class ExpectationService {
         return expectation;
     }
 
-    public List<Expectation> findAllByUser(User user) {
+    public List<Expectation> findAllByUserId(Long userId) {
         log.info("Finding all expectations");
-        return expectationRepository.findAllByUser(user);
+        return expectationRepository.findAllByUserId(userId);
     }
 
     public Expectation create(ExpectationRequestDTO expectationRequestDTO) {
         log.info("Creating expectation: " + expectationRequestDTO);
-        User user = userService.findById(expectationRequestDTO.getUserId());
         Category category = categoryService.findById(expectationRequestDTO.getCategoryId());
         Expectation expectation = new Expectation();
         expectation.setAmount(expectationRequestDTO.getAmount());
-        expectation.setUser(user);
+        expectation.setUserId(expectationRequestDTO.getUserId());
         expectation.setCategory(category);
         return expectationRepository.save(expectation);
     }
 
     public Expectation update(ExpectationRequestDTO expectationRequestDTO) {
         log.info("Updating expectation: " + expectationRequestDTO);
-        User user = userService.findById(expectationRequestDTO.getUserId());
         Category category = categoryService.findById(expectationRequestDTO.getCategoryId());
         Expectation expectation = expectationRepository.findById(expectationRequestDTO.getId()).orElseThrow();
         expectation.setAmount(expectationRequestDTO.getAmount());
-        expectation.setUser(user);
+        expectation.setUserId(expectationRequestDTO.getUserId());
         expectation.setCategory(category);
         return expectationRepository.save(expectation);
     }

@@ -1,6 +1,5 @@
 package com.kineipe.financemanager.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
@@ -14,10 +13,8 @@ public class Transaction {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @JsonIgnore
-    @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
+    @Column(name = "user_id", nullable = false)
+    private Long userId;
 
     @ManyToOne
     @JoinColumn(name = "category_id", nullable = false)
@@ -38,9 +35,9 @@ public class Transaction {
 
     public Transaction() {}
 
-    public Transaction(Long id, User user, Category category, Account account, Double amount, LocalDateTime date, String description) {
+    public Transaction(Long id, Long userId, Category category, Account account, Double amount, LocalDateTime date, String description) {
         this.id = id;
-        this.user = user;
+        this.userId = userId;
         this.category = category;
         this.account = account;
         this.amount = amount;
@@ -56,12 +53,12 @@ public class Transaction {
         this.id = id;
     }
 
-    public User getUser() {
-        return user;
+    public Long getUserId() {
+        return userId;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     public Category getCategory() {

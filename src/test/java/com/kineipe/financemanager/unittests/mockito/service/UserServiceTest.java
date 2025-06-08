@@ -1,8 +1,5 @@
 package com.kineipe.financemanager.unittests.mockito.service;
 
-import com.kineipe.financemanager.domain.User;
-import com.kineipe.financemanager.repository.UserRepository;
-import com.kineipe.financemanager.service.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;

@@ -3,6 +3,8 @@ package com.kineipe.financemanager.service;
 import com.kineipe.financemanager.domain.Account;
 import com.kineipe.financemanager.domain.Category;
 import com.kineipe.financemanager.domain.Transaction;
+import com.kineipe.financemanager.domain.dto.MonthlyBalanceDTO;
+import com.kineipe.financemanager.domain.dto.MonthlyBalanceResponseDTO;
 import com.kineipe.financemanager.domain.dto.TransactionRequestDTO;
 import com.kineipe.financemanager.repository.TransactionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +12,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 import java.util.logging.Logger;
 
 @Service
@@ -74,6 +79,24 @@ public class TransactionService {
         log.info("Deleting transaction by id: " + id);
         Transaction entity = transactionRepository.findById(id).orElseThrow();
         transactionRepository.delete(entity);
+    }
+
+    public List<MonthlyBalanceResponseDTO> getMonthlyBalances(Long userId) {
+        List<MonthlyBalanceDTO> summaries = transactionRepository.getMonthlySummaries(userId);
+        List<MonthlyBalanceResponseDTO> responses = new ArrayList<>();
+
+        for (MonthlyBalanceDTO s : summaries) {
+            double income = Optional.ofNullable(s.getTotalIncome()).orElse(0.0);
+            double expense = Optional.ofNullable(s.getTotalExpense()).orElse(0.0);
+
+            responses.add(new MonthlyBalanceResponseDTO(
+                    s.getMonth(),
+                    income,
+                    expense
+            ));
+        }
+
+        return responses;
     }
     
 }

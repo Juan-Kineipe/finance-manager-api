@@ -2,6 +2,7 @@ package com.kineipe.financemanager.controller;
 
 
 import com.kineipe.financemanager.domain.Transaction;
+import com.kineipe.financemanager.domain.dto.MonthlyBalanceResponseDTO;
 import com.kineipe.financemanager.domain.dto.TransactionRequestDTO;
 import com.kineipe.financemanager.service.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/transaction")
@@ -55,6 +58,12 @@ public class TransactionController {
     public ResponseEntity<Transaction> delete(@PathVariable(value = "id") Long id) {
         transactionService.delete(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/monthlyBalance")
+    public List<MonthlyBalanceResponseDTO> getMonthlyBalance(Authentication authentication) {
+        Long userId = (Long) authentication.getPrincipal();
+        return transactionService.getMonthlyBalances(userId);
     }
 
 }

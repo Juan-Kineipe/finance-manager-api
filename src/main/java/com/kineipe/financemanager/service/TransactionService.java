@@ -12,6 +12,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -42,9 +43,13 @@ public class TransactionService {
         return transaction;
     }
 
-    public Page<Transaction> findAllByUserId(Long userId, Pageable pageable) {
+    public Page<Transaction> findAllByUserId(Long userId, LocalDateTime startDate, LocalDateTime endDate, Pageable pageable) {
         log.info("Finding all transactions");
-        return transactionRepository.findByUserId(userId, pageable);
+        if (startDate != null && endDate != null) {
+            return transactionRepository.findByUserIdAndDateBetween(userId, startDate, endDate, pageable);
+        } else {
+            return transactionRepository.findByUserId(userId, pageable);
+        }
     }
 
     public Transaction create(TransactionRequestDTO transactionRequestDTO) {
